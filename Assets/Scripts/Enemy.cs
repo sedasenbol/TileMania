@@ -22,7 +22,12 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Move();
+        if (!gameManager.StateOfTheGame.IsAlive)
+        {
+            rb.velocity = new Vector2(0,0);
+            return;
+        }
+            Move();
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

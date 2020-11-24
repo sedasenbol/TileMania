@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
     }
     private void Die()
     {
-        rb.velocity = new Vector2(50f,50f);
         anim.SetTrigger("Die");
         gameManager.IsPlayerDead();
     }
@@ -84,7 +83,7 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 12)
+        if (new List<int> {12,13,14}.Contains(collision.gameObject.layer))
         {
             Die();
         }

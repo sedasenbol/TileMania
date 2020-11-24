@@ -18,8 +18,8 @@ TagManager:
   - Player
   - Background
   - Enemy
-  - 
-  - 
+  - Saw
+  - Mace
   - 
   - 
   - 
@@ -50,9 +50,15 @@ TagManager:
   - name: Enemy
     uniqueID: 3926301373
     locked: 0
+  - name: Saw
+    uniqueID: 1167252345
+    locked: 0
   - name: Player
     uniqueID: 3463999387
     locked: 0
   - name: Foreground
     uniqueID: 176271505
+    locked: 0
+  - name: Maces
+    uniqueID: 3545285225
     locked: 0
