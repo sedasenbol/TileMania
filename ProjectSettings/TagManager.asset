@@ -20,8 +20,8 @@ TagManager:
   - Enemy
   - Saw
   - Mace
-  - 
-  - 
+  - LevelExit
+  - Coins
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 1914071561
     locked: 0
+  - name: Water
+    uniqueID: 2636385265
+    locked: 0
   - name: Climbing
     uniqueID: 3199332721
     locked: 0
@@ -61,4 +64,10 @@ TagManager:
     locked: 0
   - name: Maces
     uniqueID: 3545285225
+    locked: 0
+  - name: LevelExit
+    uniqueID: 4283776087
+    locked: 0
+  - name: Coins
+    uniqueID: 76261257
     locked: 0

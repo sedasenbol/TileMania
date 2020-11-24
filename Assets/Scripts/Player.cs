@@ -5,14 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const float RUN_SPEED = 5f;
-    private const float JUMP_SPEED = 20f;
+    private const float JUMP_SPEED = 25f;
     private const float CLIMB_SPEED = 5f;
     private bool isJumping = false;
+    private bool isAlive = true;
     private Rigidbody2D rb;
     private Animator anim;
     private CapsuleCollider2D capsuleCollider;
     private BoxCollider2D boxCollider;
-    private GameManager gameManager;
     private void Run()
     {
         float runSpeed = Input.GetAxis("Horizontal") * RUN_SPEED;
@@ -47,7 +47,8 @@ public class Player : MonoBehaviour
     private void Die()
     {
         anim.SetTrigger("Die");
-        gameManager.IsPlayerDead();
+        isAlive = false;
+        //event
     }
     private void Start()
     {
@@ -55,11 +56,10 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        gameManager = FindObjectOfType<GameManager>();
     }
     private void Update()
     {
-        if (!gameManager.StateOfTheGame.IsAlive)
+        if (!isAlive)
         {
             return;
         }
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!gameManager.StateOfTheGame.IsAlive)
+        if (!isAlive)
         {
             return;
         }
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (new List<int> {12,13,14}.Contains(collision.gameObject.layer))
+        if (new List<int> {12,13,14,4}.Contains(collision.gameObject.layer))
         {
             Die();
         }
