@@ -8948,9 +8948,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1639017099}
     - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
-      propertyPath: m_ChildCameras.Array.size
-      value: 0
+      propertyPath: m_ParentHash.Array.size
+      value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+      propertyPath: m_ChildCameras.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+      propertyPath: m_Instructions.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+      propertyPath: m_ParentHash.Array.data[3].m_Hash
+      value: 925956157
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+      propertyPath: m_Instructions.Array.data[3].m_FullHash
+      value: 925956157
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+      propertyPath: m_ParentHash.Array.data[3].m_ParentHash
+      value: 756556552
+      objectReference: {fileID: 0}
+    - target: {fileID: 5110087826205528099, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+      propertyPath: m_Instructions.Array.data[3].m_VirtualCamera
+      value: 
+      objectReference: {fileID: 5110087825882067634}
     - target: {fileID: 5110087826377673265, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -9041,6 +9065,17 @@ PrefabInstance:
       objectReference: {fileID: 1639017100}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+--- !u!114 &5110087825882067634 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5110087827408224949, guid: 9f62427fd90920e4ebec911f18f9716c, type: 3}
+  m_PrefabInstance: {fileID: 5110087825882067633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5274135828306335218
 PrefabInstance:
   m_ObjectHideFlags: 0

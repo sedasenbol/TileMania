@@ -22,7 +22,7 @@ TagManager:
   - Mace
   - LevelExit
   - Coins
-  - 
+  - Chest
   - 
   - 
   - 
@@ -56,6 +56,12 @@ TagManager:
   - name: Saw
     uniqueID: 1167252345
     locked: 0
+  - name: Chest
+    uniqueID: 159344661
+    locked: 0
+  - name: Coins
+    uniqueID: 76261257
+    locked: 0
   - name: Player
     uniqueID: 3463999387
     locked: 0
@@ -67,7 +73,4 @@ TagManager:
     locked: 0
   - name: LevelExit
     uniqueID: 4283776087
-    locked: 0
-  - name: Coins
-    uniqueID: 76261257
     locked: 0
