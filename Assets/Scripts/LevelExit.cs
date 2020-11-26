@@ -5,26 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
 {
-    private const int LAST_SCENE_INDEX = 2;
-    private const float LEVEL_LOAD_DELAY = 2f;
-    private const float LEVEL_EXIT_SLOW_MOTION_FACTOR = 0.2f;
+    public delegate void NextLevel();
+    public static event NextLevel ExitLevel;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 10)
+        if (collision.gameObject.layer == 10 && ExitLevel != null)
         {
-            StartCoroutine(LoadNextLevel());
+            ExitLevel();
         }
     }
-    private IEnumerator LoadNextLevel()
-    {
-        Time.timeScale = LEVEL_EXIT_SLOW_MOTION_FACTOR;
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        yield return new WaitForSecondsRealtime(LEVEL_LOAD_DELAY);
-        Time.timeScale = 1f;
-        if (currentSceneIndex != LAST_SCENE_INDEX)
-        {
-            SceneManager.LoadScene(currentSceneIndex + 1);
-        }
-    }
-
 }

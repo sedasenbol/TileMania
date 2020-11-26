@@ -7,14 +7,10 @@ public class GameState
     public enum State
     {
         Start,
-        CountDown,
         OnPlay,
         Paused,
-        Resuming,
         IsDead,
-        Replaying,
         GameOver,
-        Restarted,
     }
     public enum Scene
     {
@@ -26,13 +22,13 @@ public class GameState
         Level5 = 5,
         Success = 6,    
     }
-    private int hearts = 3;
+    private int lives = 3;
     private int coins = 0;
     private int score = 0;
     private bool isAlive = false;
     private State currentState = State.Start;
     private Scene currentScene = Scene.Start;
-    public int Hearts { get { return hearts; } set { hearts = value; } }
+    public int Lives { get { return lives; } set { lives = value; } }
     public int Coins { get { return coins; } set { coins = value; } }
     public int Score { get { return score; } set { score = value; } }
     public bool IsAlive { get { return isAlive; } set { isAlive = value; } }

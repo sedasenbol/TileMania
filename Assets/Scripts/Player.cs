@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public delegate void PlayerNews();
+    public static event PlayerNews PlayerIsDead;
+    public static event PlayerNews PickedUpCoin;
     private const float RUN_SPEED = 5f;
     private const float JUMP_SPEED = 25f;
     private const float CLIMB_SPEED = 5f;
@@ -48,7 +51,10 @@ public class Player : MonoBehaviour
     {
         anim.SetTrigger("Die");
         isAlive = false;
-        //event
+        if (PlayerIsDead != null)
+        {
+            PlayerIsDead();
+        }
     }
     private void Start()
     {
@@ -86,6 +92,17 @@ public class Player : MonoBehaviour
         if (new List<int> {12,13,14,4}.Contains(collision.gameObject.layer))
         {
             Die();
+        }
+        if (collision.gameObject.layer == 16 && PickedUpCoin != null)
+        {
+            PickedUpCoin();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 16 && PickedUpCoin != null)
+        {
+            PickedUpCoin();
         }
     }
 }

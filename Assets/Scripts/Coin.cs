@@ -6,19 +6,26 @@ public class Coin : MonoBehaviour
 {
     [SerializeField]
     private AudioClip pickUpCoin;
-    private void OnTriggerEnter2D(Collider2D other)
+    private bool isPlayerAlive = true;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.gameObject.layer == 10)
+        if (collision.gameObject.layer == 10 && isPlayerAlive)
         {
             AudioSource.PlayClipAtPoint(pickUpCoin, Camera.main.transform.position);
             Destroy(this.gameObject);
         }
     }
-    private void Start()
+    private void OnEnable()
     {
+        Player.PlayerIsDead += IsPlayerDead;  
     }
-    private void Update()
+    private void OnDisable()
     {
+        Player.PlayerIsDead -= IsPlayerDead;
+    }
+    private void IsPlayerDead()
+    {
+        isPlayerAlive = false;
+    }
 
-    }
 }
