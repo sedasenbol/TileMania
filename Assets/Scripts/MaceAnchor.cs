@@ -14,9 +14,6 @@ public class MaceAnchor : MonoBehaviour
         sequence.Append(transform.DORotate(new Vector3(0f, 0f, ROTATION_ANGLE), ROTATION_TIME));
         sequence.SetLoops(-1);
     }
-    private void Update()
-    {
-    }
     private void Start()
     {
         Rotate();

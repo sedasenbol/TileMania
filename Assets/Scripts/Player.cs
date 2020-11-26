@@ -12,12 +12,12 @@ public class Player : MonoBehaviour
     private const float CLIMB_SPEED = 5f;
     private bool isJumping = false;
     private bool isAlive = true;
-    private int lives = 3;
-    private Vector3 startPos;
     private Rigidbody2D rb;
     private Animator anim;
     private CapsuleCollider2D capsuleCollider;
     private BoxCollider2D boxCollider;
+    private int lives = 3;
+    private Vector3 startPos;
     private void Run()
     {
         float runSpeed = Input.GetAxis("Horizontal") * RUN_SPEED;
@@ -56,11 +56,32 @@ public class Player : MonoBehaviour
         {
             PlayerIsDead();
         }
-        if (lives>1)
+        if (lives == 1)
         {
-            lives--;
-            transform.position = startPos;
-            anim.Play("Idle");
+            isAlive = false;
+            return;
+        }
+        lives--;
+        transform.position = startPos;
+        rb.velocity = Vector2.zero;
+        anim.Play("Idle");
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (new List<int> { 12, 13, 14, 4 }.Contains(collision.gameObject.layer) && isAlive)
+        {
+            Die();
+        }
+        if (collision.gameObject.layer == 16 && PickedUpCoin != null)
+        {
+            PickedUpCoin();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 16 && PickedUpCoin != null)
+        {
+            PickedUpCoin();
         }
     }
     private void Start()
@@ -94,23 +115,5 @@ public class Player : MonoBehaviour
             Jump();
         }
         ClimbLadder();
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (new List<int> {12,13,14,4}.Contains(collision.gameObject.layer))
-        {
-            Die();
-        }
-        if (collision.gameObject.layer == 16 && PickedUpCoin != null)
-        {
-            PickedUpCoin();
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 16 && PickedUpCoin != null)
-        {
-            PickedUpCoin();
-        }
     }
 }

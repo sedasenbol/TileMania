@@ -8,11 +8,6 @@ public class Chest : MonoBehaviour
     private Animator anim;
     private GameObject chestCoinPrefab;
     private bool isClosed = true;
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-        chestCoinPrefab = Resources.Load<GameObject>("Prefabs/ChestCoin");
-    }
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision.gameObject.layer == 10 && isClosed)
@@ -26,5 +21,10 @@ public class Chest : MonoBehaviour
             }
             Destroy(this.gameObject, anim.GetCurrentAnimatorStateInfo(0).length + DESTROY_DELAY);
         }   
+    }
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+        chestCoinPrefab = Resources.Load<GameObject>("Prefabs/ChestCoin");
     }
 }

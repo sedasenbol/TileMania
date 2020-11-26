@@ -24,17 +24,6 @@ public class UIManager : MonoBehaviour
     public static event ClickedButton PauseButtonClicked;
     public static event ClickedButton ReplayButtonClicked;
     private GameState gameState;
-    private void Start()
-    {
-        gameState = FindObjectOfType<GameManager>().StateOfTheGame;
-    }
-    private void Update()
-    {
-        if(gameState.IsAlive)
-        {
-            ShowTexts();
-        }
-    }
     private void ShowTexts()
     {
         livesText.text = "Lives: " + gameState.Lives;
@@ -66,19 +55,9 @@ public class UIManager : MonoBehaviour
             PauseButtonClicked();
         }
     }
-    private void OnEnable()
-    {
-        GameManager.Success += Congrats;
-        GameManager.GameOver += GameIsOver;
-    }
-    private void OnDisable()
-    {
-        GameManager.Success -= Congrats;
-        GameManager.GameOver -= GameIsOver;
-    }
     private void Congrats()
     {
-        congratsText.text = "Congratulations !"+ System.Environment.NewLine +"Your Score Is: " + gameState.Score.ToString();
+        congratsText.text = "Congratulations !" + System.Environment.NewLine + "Your Score Is: " + gameState.Score.ToString();
         congratsText.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(true);
@@ -89,4 +68,26 @@ public class UIManager : MonoBehaviour
         pauseButton.gameObject.SetActive(false);
         replayButton.gameObject.SetActive(true);
     }
+    private void OnEnable()
+    {
+        GameManager.Success += Congrats;
+        GameManager.GameOver += GameIsOver;
+    }
+    private void OnDisable()
+    {
+        GameManager.Success -= Congrats;
+        GameManager.GameOver -= GameIsOver;
+    }
+    private void Start()
+    {
+        gameState = FindObjectOfType<GameManager>().StateOfTheGame;
+    }
+    private void Update()
+    {
+        if(gameState.IsAlive)
+        {
+            ShowTexts();
+        }
+    }
+
 }

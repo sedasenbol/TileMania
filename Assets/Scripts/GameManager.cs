@@ -5,17 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private const int LAST_SCENE_INDEX = 4;
-    private const float LEVEL_LOAD_DELAY = 2f;
-    private const float LEVEL_EXIT_SLOW_MOTION_FACTOR = 0.2f;
-    private Vector3 waterStartPos = new Vector3(0, -6.3f, 0);
-    private GameState gameState = new GameState();
-    private GameObject waterPrefab;
     public delegate void EndOfTheGame();
     public static event EndOfTheGame Success;
     public static event EndOfTheGame GameOver;
-    public void IsPlayerDead()
+    private const int LAST_SCENE_INDEX = 4;
+    private const float SLOW_MOTION_DELAY = 2f;
+    private const float SLOW_MOTION_FACTOR = 0.2f;
+    private GameObject waterPrefab;
+    private Vector3 waterStartPos = new Vector3(0, -6.3f, 0);
+    private GameState gameState = new GameState();
+    private void IsPlayerDead()
     {
+        gameState.Lives--;
         if (gameState.Lives == 0)
         {
             gameState.CurrentState = GameState.State.GameOver;
@@ -27,30 +28,13 @@ public class GameManager : MonoBehaviour
             }
             return;
         };
-        gameState.Lives--;
-        if ((int)gameState.CurrentScene==4)
-        {
-            Destroy(GameObject.Find("Water"));
-            Instantiate(waterPrefab, waterStartPos,Quaternion.identity);
-        }
+        StartCoroutine(DieSlowMotion());
     }
-    private void OnEnable()
+    private IEnumerator DieSlowMotion()
     {
-        UIManager.PlayButtonClicked += LoadNextScene;
-        UIManager.PauseButtonClicked += PauseOrResume;
-        UIManager.ReplayButtonClicked += LoadStartMenu;
-        Player.PlayerIsDead += IsPlayerDead;
-        Player.PickedUpCoin += IncreaseCoins;
-        LevelExit.ExitLevel += LoadNextScene;
-    }
-    private void OnDisable()
-    {
-        UIManager.PlayButtonClicked -= LoadNextScene;
-        UIManager.PauseButtonClicked -= PauseOrResume;
-        UIManager.ReplayButtonClicked -= LoadStartMenu;
-        Player.PlayerIsDead -= IsPlayerDead;
-        Player.PickedUpCoin -= IncreaseCoins;
-        LevelExit.ExitLevel -= LoadNextScene;
+        Time.timeScale = 0.2f;
+        yield return new WaitForSecondsRealtime(SLOW_MOTION_DELAY);
+        Time.timeScale = 1f;
     }
     private void IncreaseCoins()
     {
@@ -74,6 +58,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            gameState.CurrentState = GameState.State.Success;
             if (Success != null)
             {
                 Success();
@@ -83,9 +68,9 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator LoadNextLevel()
     {
-        Time.timeScale = LEVEL_EXIT_SLOW_MOTION_FACTOR;
+        Time.timeScale = SLOW_MOTION_FACTOR;
         int currentScene = (int)gameState.CurrentScene;
-        yield return new WaitForSecondsRealtime(LEVEL_LOAD_DELAY);
+        yield return new WaitForSecondsRealtime(SLOW_MOTION_DELAY);
         Time.timeScale = 1f;
         gameState.CurrentScene = (GameState.Scene)(currentScene + 1);
         SceneManager.LoadScene(currentScene + 1,LoadSceneMode.Additive);
@@ -93,6 +78,37 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.Find("Stage").gameObject);
         Destroy(GameObject.Find("Cameras").gameObject);
         Destroy(GameObject.Find("Player").gameObject);
+    }
+    private void PauseOrResume()
+    {
+        if (gameState.CurrentState == GameState.State.Paused)
+        {
+            gameState.CurrentState = GameState.State.OnPlay;
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            gameState.CurrentState = GameState.State.Paused;
+            Time.timeScale = 0f;
+        }
+    }
+    private void OnEnable()
+    {
+        UIManager.PlayButtonClicked += LoadNextScene;
+        UIManager.PauseButtonClicked += PauseOrResume;
+        UIManager.ReplayButtonClicked += LoadStartMenu;
+        Player.PlayerIsDead += IsPlayerDead;
+        Player.PickedUpCoin += IncreaseCoins;
+        LevelExit.ExitLevel += LoadNextScene;
+    }
+    private void OnDisable()
+    {
+        UIManager.PlayButtonClicked -= LoadNextScene;
+        UIManager.PauseButtonClicked -= PauseOrResume;
+        UIManager.ReplayButtonClicked -= LoadStartMenu;
+        Player.PlayerIsDead -= IsPlayerDead;
+        Player.PickedUpCoin -= IncreaseCoins;
+        LevelExit.ExitLevel -= LoadNextScene;
     }
     private void Start()
     {
@@ -103,19 +119,6 @@ public class GameManager : MonoBehaviour
         gameState.CurrentScene = GameState.Scene.Start;
         gameState.CurrentState = GameState.State.Start;
         waterPrefab = Resources.Load<GameObject>("Prefabs/Water");
-    }
-    private void PauseOrResume()
-    {
-        if (gameState.CurrentState == GameState.State.Paused)
-        {
-            gameState.CurrentState = GameState.State.OnPlay;
-            Time.timeScale = 1;
-        }
-        else
-        {
-            gameState.CurrentState = GameState.State.Paused;
-            Time.timeScale = 0;
-        }
     }
     public GameState StateOfTheGame { get { return gameState; } }
 }
