@@ -9,7 +9,7 @@ public class GameState
         Start,
         OnPlay,
         Paused,
-        IsDead,
+        Success,
         GameOver,
     }
     public enum Scene
@@ -19,8 +19,6 @@ public class GameState
         Level2 = 2,
         Level3 = 3,
         Level4 = 4,
-        Level5 = 5,
-        Success = 6,    
     }
     private int lives = 3;
     private int coins = 0;

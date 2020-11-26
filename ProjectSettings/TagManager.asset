@@ -56,6 +56,9 @@ TagManager:
   - name: Saw
     uniqueID: 1167252345
     locked: 0
+  - name: Maces
+    uniqueID: 3545285225
+    locked: 0
   - name: Chest
     uniqueID: 159344661
     locked: 0
@@ -67,9 +70,6 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 176271505
-    locked: 0
-  - name: Maces
-    uniqueID: 3545285225
     locked: 0
   - name: LevelExit
     uniqueID: 4283776087

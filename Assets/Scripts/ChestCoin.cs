@@ -7,10 +7,9 @@ public class ChestCoin : MonoBehaviour
     [SerializeField]
     private AudioClip pickUpCoin;
     private Rigidbody2D rb;
-    private bool isPlayerAlive = true;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 10 && isPlayerAlive)
+        if (collision.gameObject.layer == 10)
         {
             AudioSource.PlayClipAtPoint(pickUpCoin, Camera.main.transform.position);
             Destroy(this.gameObject);
@@ -23,17 +22,5 @@ public class ChestCoin : MonoBehaviour
     private void Start()
     {
         rb.velocity = new Vector2(Random.Range(-10,10), Random.Range(5, 10));
-    }
-    private void OnEnable()
-    {
-        Player.PlayerIsDead += IsPlayerDead;
-    }
-    private void OnDisable()
-    {
-        Player.PlayerIsDead -= IsPlayerDead;
-    }
-    private void IsPlayerDead()
-    {
-        isPlayerAlive = false;
     }
 }

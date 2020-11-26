@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     private const float CLIMB_SPEED = 5f;
     private bool isJumping = false;
     private bool isAlive = true;
+    private int lives = 3;
+    private Vector3 startPos;
     private Rigidbody2D rb;
     private Animator anim;
     private CapsuleCollider2D capsuleCollider;
@@ -50,10 +52,15 @@ public class Player : MonoBehaviour
     private void Die()
     {
         anim.SetTrigger("Die");
-        isAlive = false;
         if (PlayerIsDead != null)
         {
             PlayerIsDead();
+        }
+        if (lives>1)
+        {
+            lives--;
+            transform.position = startPos;
+            anim.Play("Idle");
         }
     }
     private void Start()
@@ -62,6 +69,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        startPos = transform.position;
     }
     private void Update()
     {

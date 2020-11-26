@@ -15,9 +15,14 @@ public class UIManager : MonoBehaviour
     private Button playButton;
     [SerializeField]
     private Button replayButton;
+    [SerializeField]
+    private Text congratsText;
+    [SerializeField]
+    private Text gameOverText;
     public delegate void ClickedButton();
     public static event ClickedButton PlayButtonClicked;
     public static event ClickedButton PauseButtonClicked;
+    public static event ClickedButton ReplayButtonClicked;
     private GameState gameState;
     private void Start()
     {
@@ -47,11 +52,41 @@ public class UIManager : MonoBehaviour
         pauseButton.gameObject.SetActive(true);
         replayButton.gameObject.SetActive(false);
     }
+    public void ReplayGame()
+    {
+        if (ReplayButtonClicked != null)
+        {
+            ReplayButtonClicked();
+        }
+    }
     public void PauseGame()
     {
         if (PauseButtonClicked != null)
         {
             PauseButtonClicked();
         }
+    }
+    private void OnEnable()
+    {
+        GameManager.Success += Congrats;
+        GameManager.GameOver += GameIsOver;
+    }
+    private void OnDisable()
+    {
+        GameManager.Success -= Congrats;
+        GameManager.GameOver -= GameIsOver;
+    }
+    private void Congrats()
+    {
+        congratsText.text = "Congratulations !"+ System.Environment.NewLine +"Your Score Is: " + gameState.Score.ToString();
+        congratsText.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(false);
+        replayButton.gameObject.SetActive(true);
+    }
+    private void GameIsOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(false);
+        replayButton.gameObject.SetActive(true);
     }
 }
